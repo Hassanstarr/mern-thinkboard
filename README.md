@@ -127,10 +127,10 @@ frontend
 Create a `.env` file inside the `backend` folder and add:
 
 ```
-MONGO_URL=
+MONGO_URL=<your_mongo_uri>
 
-UPSTASH_REDIS_REST_URL=
-UPSTASH_REDIS_REST_TOKEN=
+UPSTASH_REDIS_REST_URL=<your_redis_rest_url>
+UPSTASH_REDIS_REST_TOKEN=<your_redis_rest_token>
 
 NODE_ENV=development
 ```
@@ -202,7 +202,6 @@ This will:
 | POST   | /api/notes     | Create a new note       |
 | PUT    | /api/notes/:id | Update a note           |
 | DELETE | /api/notes/:id | Delete a note           |
-
 --------|-------------------|--------------------|
 | GET    | /api/notes        | Get all notes      |
 | POST   | /api/notes        | Create a new note  |
