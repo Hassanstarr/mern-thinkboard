@@ -26,17 +26,33 @@ const __dirname = path.resolve();
 CORS CONFIG
 -----------------------------------------
 */
-let corsOrigin = "http://localhost:5173";
+// let corsOrigin = "https://mern-thinkboard-ivory.vercel.app/";
 
-if (process.env.NODE_ENV === "production") {
-  corsOrigin = process.env.FRONTEND_URL;
-}
+// if (process.env.NODE_ENV === "production") {
+//   corsOrigin = process.env.FRONTEND_URL;
+// }
 
-if(process.env.NODE_ENV !== "production"){
-  app.use(cors({
-    origin:corsOrigin,
-  }));
-}
+// if(process.env.NODE_ENV !== "production"){
+//   app.use(cors({
+//     origin:corsOrigin,
+//   }));
+// }
+const allowedOrigins = [
+  "http://localhost:5173", // your frontend dev server
+  "https://mern-thinkboard-ivory.vercel.app" // production frontend
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // allow mobile apps or curl (no origin)
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS blocked for origin ${origin}`));
+    }
+  },
+  credentials: true
+}));
 
 /*
 -----------------------------------------
