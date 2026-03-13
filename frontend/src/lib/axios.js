@@ -3,7 +3,7 @@ import axios from "axios";
 
 // dotenv.config();
 
-const BASE_URL = process.env.BACKEND_URL || (process.env.NODE_ENV === "production" ? "/" : "http://localhost:5001/api");
+const BASE_URL = process.env.BACKEND_URL ||  "http://localhost:5001/api";
 const api = axios.create({
   baseURL: BASE_URL,
 });
