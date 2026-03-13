@@ -1,9 +1,10 @@
 import axios from "axios";
-import dotenv from "dotenv";
 
-dotenv.config();
+// React requires environment variables to start with REACT_APP_
+// Remove dotenv — it doesn't work in the frontend
 
-const BASE_URL = process.env.BACKEND_URL ||  "http://localhost:5001/api";
+// Use REACT_APP_BACKEND_URL for production (Vercel) and fallback to localhost in dev
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5001/api";
 const api = axios.create({
   baseURL: BASE_URL,
 });
