@@ -21,12 +21,28 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
-//middleware
+/*
+-----------------------------------------
+CORS CONFIG
+-----------------------------------------
+*/
+let corsOrigin = "http://localhost:5173";
+
+if (process.env.NODE_ENV === "production") {
+  corsOrigin = process.env.FRONTEND_URL;
+}
+
 if(process.env.NODE_ENV !== "production"){
   app.use(cors({
-    origin:"http://localhost:5173",
+    origin:corsOrigin,
   }));
 }
+
+/*
+-----------------------------------------
+MIDDLEWARE
+-----------------------------------------
+*/
 app.use(express.json()); //this middleware will parse JSON bodies: req.body
 app.use(rateLimiter)
 
@@ -38,9 +54,19 @@ app.use(rateLimiter)
 //   }
 // );
 
+/*
+-----------------------------------------
+ROUTES
+-----------------------------------------
+*/
 app.use("/api/notes", notesRouter);
 
-if(process.env.NODE_ENV === "production"){
+/*
+-----------------------------------------
+SERVE FRONTEND (ONLY IF HOSTED TOGETHER)
+-----------------------------------------
+*/
+if(process.env.NODE_ENV === "production" && process.env.HOSTING !== "railway"){
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));

@@ -18,7 +18,7 @@ const NoteDetailPage = () => {
     const fetchNote = async () => {
       try {
         const res = await api.get(`/notes/${id}`);
-        setNote(res.data);
+        setNote(res.data.note);
       } catch (error) {
         console.log("Error in fetching note", error);
         toast.error("Failed to fetch the note");
@@ -96,7 +96,7 @@ const NoteDetailPage = () => {
                   type="text"
                   placeholder="Note title"
                   className="input input-bordered"
-                  value={note.title}
+                  value={note?.title || ""}
                   onChange={(e) => setNote({ ...note, title: e.target.value })}
                 />
               </div>
@@ -108,7 +108,7 @@ const NoteDetailPage = () => {
                 <textarea
                   placeholder="Write your note here..."
                   className="textarea textarea-bordered h-32"
-                  value={note.content}
+                  value={note?.content || ""}
                   onChange={(e) => setNote({ ...note, content: e.target.value })}
                 />
               </div>
